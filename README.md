@@ -10,6 +10,7 @@ To use LBDataText it is necessary two files:
 This file describes the data structure of file, as below:
 
 **Document Structure Types**
+
 Define how the keys (aka fields/columns) are separate. These can be:
 1. COLUMN_STYLE=FIXED_WIDTH: The keys have a start index and a fixed length.
 2. COLUMN_STYLE=CSV: An ordinary CSV file. The separator character is defined by DELIMITER=String.
