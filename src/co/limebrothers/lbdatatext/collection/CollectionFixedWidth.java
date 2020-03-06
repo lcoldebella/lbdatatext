@@ -43,9 +43,9 @@ public class CollectionFixedWidth extends Collection {
 		List<String> result = new ArrayList<String>();
 		DocumentDefinition documentDefinition = getDocumentDefinitionByDescriptor(documentDescriptor);
 		if (documentDefinition == null) return result;
-		int lengthToKey = lengthToKey(documentDescriptor, keyName);
 		Key key = getKeyByName(documentDefinition, keyName);
 		if (key == null) return result;
+		int lengthToKey = lengthUpToKey(documentDefinition, key);				
 		for (String line : data) {
 			if (line.toUpperCase().startsWith(documentDescriptor.toUpperCase()))
 				result.add(line.substring(lengthToKey, lengthToKey + key.getLength()));
@@ -53,16 +53,14 @@ public class CollectionFixedWidth extends Collection {
 		return result;
 	}
 	
-	private int lengthToKey(String documentDescriptor, String keyName) {
-		DocumentDefinition documentDefinition = getDocumentDefinitionByDescriptor(documentDescriptor);
-		if (documentDefinition == null) return 0;
+	private int lengthUpToKey(DocumentDefinition documentDefinition, Key key) {
 		int length = 0;
-		for (Key key : documentDefinition.getKeys()) {
-			if (key.getName().equalsIgnoreCase(keyName))
+		for (Key k : documentDefinition.getKeys()) {
+			if (k.getName().equalsIgnoreCase(key.getName()))
 				return length;
 			else
-				length+=key.getLength();
+				length+=k.getLength();
 		}
-		return 0;
+		return length;
 	}
 }
