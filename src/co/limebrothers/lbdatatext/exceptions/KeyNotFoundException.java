@@ -2,9 +2,9 @@
 * LBDataText is an open source library for structured data text manipulation.
 * Copyright LimeBrothers CO
 * 
-* @author  Leonardo Coldebella
+* @author  lcoldebella
 * @version 1.0
-* @since   2020-02-29
+* @since   10 de mar de 2020
 *  
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -19,13 +19,9 @@
 * limitations under the License.
 * 
 */
-package co.limebrothers.lbdatatext.collection;
+package co.limebrothers.lbdatatext.exceptions;
 
-import java.util.List;
+public class KeyNotFoundException extends RuntimeException {
+	private static final long serialVersionUID = -3784597989827568615L;
 
-import co.limebrothers.lbdatatext.enums.ComparisonOperatorType;
-
-public interface Iterable {
-	List<String> getValue(List<String> data, String documentDescriptor, String keyName);
-	<T> List<String> find(List<String> data, String documentDescriptor, String keyName, ComparisonOperatorType comparison, T value);
 }

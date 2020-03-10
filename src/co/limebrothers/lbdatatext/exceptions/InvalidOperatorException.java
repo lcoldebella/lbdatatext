@@ -19,13 +19,8 @@
 * limitations under the License.
 * 
 */
-package co.limebrothers.lbdatatext.collection;
+package co.limebrothers.lbdatatext.exceptions;
 
-import java.util.List;
-
-import co.limebrothers.lbdatatext.enums.ComparisonOperatorType;
-
-public interface Iterable {
-	List<String> getValue(List<String> data, String documentDescriptor, String keyName);
-	<T> List<String> find(List<String> data, String documentDescriptor, String keyName, ComparisonOperatorType comparison, T value);
+public class InvalidOperatorException extends RuntimeException {
+	private static final long serialVersionUID = -5711282390993970824L;
 }

@@ -19,13 +19,14 @@
 * limitations under the License.
 * 
 */
-package co.limebrothers.lbdatatext.collection;
+package co.limebrothers.lbdatatext.enums;
 
-import java.util.List;
-
-import co.limebrothers.lbdatatext.enums.ComparisonOperatorType;
-
-public interface Iterable {
-	List<String> getValue(List<String> data, String documentDescriptor, String keyName);
-	<T> List<String> find(List<String> data, String documentDescriptor, String keyName, ComparisonOperatorType comparison, T value);
+public enum ComparisonOperatorType {
+	EQ,
+	GT,
+	GTE,
+	IN,
+	LT,
+	LTE,
+	REGEX
 }

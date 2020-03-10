@@ -21,6 +21,12 @@
 */
 package co.limebrothers.lbdatatext.collection;
 
+import java.util.Arrays;
+
+import co.limebrothers.lbdatatext.enums.ComparisonOperatorType;
+import co.limebrothers.lbdatatext.enums.KeyType;
+import co.limebrothers.lbdatatext.exceptions.InvalidOperatorException;
+
 public class KeyTools {
 	
 	public static String[] getKeyValues(String value) {
@@ -67,5 +73,25 @@ public class KeyTools {
 		} while (lastLeftParentheseIndexTmp != -1);
 		
 		return cmd.substring(firstLeftParentheseIndex + 1, lastLeftParentheseIndex);
+	}
+	
+	public static void validateComparisonOperator(KeyType keyType, ComparisonOperatorType comparisonOperator) {
+		ComparisonOperatorType[] comparisonOperatorForNumeric = new ComparisonOperatorType[] { ComparisonOperatorType.EQ, ComparisonOperatorType.GT, ComparisonOperatorType.GTE, ComparisonOperatorType.LT, ComparisonOperatorType.LTE };
+		ComparisonOperatorType[] comparisonOperatorForString = new ComparisonOperatorType[] { ComparisonOperatorType.EQ, ComparisonOperatorType.REGEX };
+		switch (keyType) {
+		case INTEGER:
+		case DATETIME:
+		case DECIMAL:
+			if (!Arrays.stream(comparisonOperatorForNumeric).anyMatch(t -> t == comparisonOperator))
+				throw new InvalidOperatorException();
+			
+		case STRING:
+			if (!Arrays.stream(comparisonOperatorForString).anyMatch(t -> t == comparisonOperator))
+				throw new InvalidOperatorException();			
+			break;
+
+		default:
+			break;
+		}
 	}
 }

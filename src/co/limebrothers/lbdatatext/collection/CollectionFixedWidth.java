@@ -23,9 +23,12 @@ package co.limebrothers.lbdatatext.collection;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import co.limebrothers.lbdatatext.document.DocumentDefinition;
 import co.limebrothers.lbdatatext.document.Key;
+import co.limebrothers.lbdatatext.enums.ComparisonOperatorType;
+import co.limebrothers.lbdatatext.exceptions.KeyNotFoundException;
 
 public class CollectionFixedWidth extends Collection {
 	private static final long serialVersionUID = 541191535271545757L;
@@ -52,6 +55,46 @@ public class CollectionFixedWidth extends Collection {
 		}
 		return result;
 	}
+
+	@Override
+	public <T> List<String> find(List<String> data, String documentDescriptor, String keyName,
+			ComparisonOperatorType comparison, T value) {
+		DocumentDefinition doc = getDocumentDefinitionByDescriptor(documentDescriptor);
+		Key key = doc.getKeys().stream().filter(k -> k.getName().equalsIgnoreCase(keyName)).findAny().orElseThrow(KeyNotFoundException::new);
+		KeyTools.validateComparisonOperator(key.getKeyType(), comparison);
+		int keyStartIndex = lengthUpToKey(doc, key);
+		int len = key.getLength();
+		
+		switch (key.getKeyType()) {
+		case STRING:
+			return findString(data, documentDescriptor, keyStartIndex, len, (String)value, comparison);			
+
+		default:
+			return null;
+		}
+	}
+	
+	private List<String> findString(List<String> data, String documentDescriptor, int keyStartIndex, int keyLength, String value, ComparisonOperatorType comparison) {
+		switch (comparison) {
+		case EQ:
+			return findStringEqual(data, documentDescriptor, keyStartIndex, keyLength, value);
+			
+		case REGEX:
+			return findStringRegex(data, documentDescriptor, keyStartIndex, keyLength, value);
+			
+		default:
+			return null;
+		}
+	}
+	
+	private List<String> findStringEqual(List<String> data, String documentDescriptor, int keyStartIndex, int keyLength, String value) {
+		return data.stream().filter(s -> s.startsWith(documentDescriptor)).filter(s -> s.substring(keyStartIndex, keyStartIndex + keyLength).trim().equalsIgnoreCase(value)).collect(Collectors.toList());
+	}
+	
+	private List<String> findStringRegex(List<String> data, String documentDescriptor, int keyStartIndex, int keyLength, String value) {
+		return data.stream().filter(s -> s.startsWith(documentDescriptor)).filter(s -> s.substring(keyStartIndex, keyStartIndex + keyLength).trim().matches((String)value)).collect(Collectors.toList());
+	}
+	
 	
 	private int lengthUpToKey(DocumentDefinition documentDefinition, Key key) {
 		int length = 0;

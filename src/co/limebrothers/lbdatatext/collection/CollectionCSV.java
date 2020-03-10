@@ -26,6 +26,7 @@ import java.util.List;
 
 import co.limebrothers.lbdatatext.document.DocumentDefinition;
 import co.limebrothers.lbdatatext.document.Key;
+import co.limebrothers.lbdatatext.enums.ComparisonOperatorType;
 
 public class CollectionCSV extends Collection  {
 	private static final long serialVersionUID = 5322356515050547346L;
@@ -52,6 +53,13 @@ public class CollectionCSV extends Collection  {
 		return result;
 	}
 
+	@Override
+	public <T> List<String> find(List<String> data, String documentDescriptor, String keyName,
+			ComparisonOperatorType comparison, T value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	private int indexOf(String documentDescriptor, String keyName) {
 		DocumentDefinition documentDataDefinition = getDocumentDefinitionByDescriptor(documentDescriptor);
 		if (documentDataDefinition == null) return -1;
