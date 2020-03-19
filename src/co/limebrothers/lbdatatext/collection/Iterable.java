@@ -28,4 +28,5 @@ import co.limebrothers.lbdatatext.enums.ComparisonOperatorType;
 public interface Iterable {
 	List<String> getValue(List<String> data, String documentDescriptor, String keyName);
 	<T> List<String> find(List<String> data, String documentDescriptor, String keyName, ComparisonOperatorType comparison, T value);
+	<T> List<String> find(List<String> data, String documentDescriptor, String keyName, ComparisonOperatorType comparison, T value, String[] returnKeys);
 }

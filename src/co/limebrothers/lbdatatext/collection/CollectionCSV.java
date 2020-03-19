@@ -76,4 +76,11 @@ public class CollectionCSV extends Collection  {
 		}
 		return -1;
 	}
+
+	@Override
+	public <T> List<String> find(List<String> data, String documentDescriptor, String keyName,
+			ComparisonOperatorType comparison, T value, String[] returnKeys) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
