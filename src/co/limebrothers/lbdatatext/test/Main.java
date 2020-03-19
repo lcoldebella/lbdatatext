@@ -8,6 +8,7 @@ import java.util.List;
 
 import co.limebrothers.lbdatatext.collection.Builder;
 import co.limebrothers.lbdatatext.collection.Collection;
+import co.limebrothers.lbdatatext.enums.ComparisonOperatorType;
 
 public class Main {
 	private static final String sampleDestPathMap ="fixed_width_sample.map";
@@ -53,10 +54,13 @@ public class Main {
 	}
 	
 	private static void testMapFromDesc(String mapFilePath) throws IOException, ClassNotFoundException {
-		File file = new File("samples/fixed_width_sample.desc");
+		File file = new File("examples/fixed_width_sample.desc");
 		Collection collection = Collection.load(file);
-		List<String> data = Files.readAllLines(Paths.get("samples/fixed_width_sample_data.txt", ""));
-		List<String> values = collection.getValue(data, "0", "score");
+		List<String> data = Files.readAllLines(Paths.get("examples/fixed_width_sample_data.txt", ""));		
+		//List<String> values = collection.getValue(data, "0", "score");
+		//List<String> values = collection.find(data, "0", "name", ComparisonOperatorType.EQ, "SMITCH, CLAUS");
+		//List<String> values = collection.find(data, "0", "name", ComparisonOperatorType.REGEX, ".*A.*");
+		List<String> values = collection.find(data, "0", "name", ComparisonOperatorType.EQ, "SMITCH, CLAUS", new String[] { "score" });
 		for (String value : values) {
 			System.out.println("Result: " + value + " (length: " + value.length() + ")");
 		}
