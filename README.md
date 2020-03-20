@@ -94,3 +94,25 @@ public static void main(String[] args) {
   }    
 }
 ```
+**Find by Values
+```
+public static void main(String[] args) {
+		try {
+			//Load data structure descriptor file
+			File file = new File("examples/fixed_width_example.desc");
+			Collection collection = Collection.load(file);
+
+			//Load data file
+			List<String> data = Files.readAllLines(
+			                      Paths.get("examples/fixed_width_data_example.txt", ""));
+			//Find by "name" key with "SMITCH, CLAUS" value in documents with descriptor '0' and return "score" key value
+			List<String> values = collection.find(data, "0", "name", ComparisonOperatorType.EQ, "SMITCH, CLAUS",
+                                    new String[] { "score" });
+			for (String value : values) {
+			  System.out.println("Result: " + value + " (length: " + value.length() + ")");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+}
+```
