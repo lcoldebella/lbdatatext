@@ -1,4 +1,8 @@
-# LBDataText Project
+![Logo](./assets/logo.png)
+
+
+# Brief Presentation
+
 LBDataText is an (in very initial stage) open source library for structured data text manipulation.
 
 To use LBDataText it is necessary two files:
