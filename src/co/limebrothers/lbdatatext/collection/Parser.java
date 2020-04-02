@@ -53,7 +53,7 @@ public class Parser {
 		
 		for (String statement : statements) {
 			if (isCreateDocumentDescriptorStatement(statement))
-				documentsDefinition.add(buildDocumentDefinition(statement));
+				documentsDefinition.add(buildDocumentDefinition(statement.toUpperCase()));
 		}
 		
 		return documentsDefinition;
