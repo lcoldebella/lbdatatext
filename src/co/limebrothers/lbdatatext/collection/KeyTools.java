@@ -41,7 +41,14 @@ public class KeyTools {
 	}
 	
 	private static String getValueRaw(String cmd) {
-		String core = getCore(cmd);
+		String core = "";
+		
+		if (isParentheseValue(cmd))
+			core = getCoreParenthese(cmd);
+		
+		if (isQuotValue(cmd))
+			core = getCoreQuot(cmd);
+		
 		boolean openedQuot = false;
 		String value = "";
 		for (int i = 0; i < core.length(); i++) {
@@ -62,7 +69,15 @@ public class KeyTools {
 		return value;
 	}
 	
-	private static String getCore(String cmd) {
+	private static boolean isParentheseValue(String cmd) {
+		return cmd.indexOf('(') > -1;
+	}
+	
+	private static boolean isQuotValue(String cmd) {
+		return cmd.indexOf('"') > -1;
+	}
+	
+	private static String getCoreParenthese(String cmd) {
 		int firstLeftParentheseIndex = cmd.indexOf('(');
 		int lastLeftParentheseIndex = -1;
 		int lastLeftParentheseIndexTmp = -1;
@@ -73,6 +88,19 @@ public class KeyTools {
 		} while (lastLeftParentheseIndexTmp != -1);
 		
 		return cmd.substring(firstLeftParentheseIndex + 1, lastLeftParentheseIndex);
+	}
+	
+	private static String getCoreQuot(String cmd) {
+		int firstLeftQuotIndex = cmd.indexOf('"');
+		int lastLeftQuotIndex = -1;
+		int lastLeftQuotIndexTmp = -1;
+		
+		do {
+			lastLeftQuotIndex = lastLeftQuotIndexTmp;
+			lastLeftQuotIndexTmp = cmd.indexOf('"', lastLeftQuotIndex + 1);
+		} while (lastLeftQuotIndexTmp != -1);
+		
+		return cmd.substring(firstLeftQuotIndex + 1, lastLeftQuotIndex);
 	}
 	
 	public static void validateComparisonOperator(KeyType keyType, ComparisonOperatorType comparisonOperator) {

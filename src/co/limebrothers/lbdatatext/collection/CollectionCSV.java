@@ -47,8 +47,7 @@ public class CollectionCSV extends Collection  {
 		int index = indexOf(documentDescriptor, keyName);
 		if (index == -1) return result;
 		for (String line : data) {
-			if (line.toUpperCase().startsWith(documentDescriptor.toUpperCase()))
-				result.add(line.split(delimiter)[index]);
+			result.add(line.split(delimiter)[index]);
 		}
 		return result;
 	}
@@ -70,7 +69,7 @@ public class CollectionCSV extends Collection  {
 		int count = 0;
 		for (Key key : documentDefinition.getKeys()) {
 			if (key.getName().equalsIgnoreCase(keyName))
-				return count + 1;
+				return count;
 			else
 				count++;
 		}

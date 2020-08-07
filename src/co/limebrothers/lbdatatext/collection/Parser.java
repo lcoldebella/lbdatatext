@@ -32,13 +32,16 @@ public class Parser {
 	
 	public static List<String> getStatements(List<String> lines) {
 		List<String> statements = new ArrayList<String>();
-		
+		boolean openedQuote = false;
 		String statement = "";
 		for (String line : lines) {
 			for (int i = 0; i < line.length(); i++) {
-				if ((line.charAt(i) == ';') && (line.charAt(i - 1) != '"')) {
+				if (line.charAt(i) == '"')
+					openedQuote = !openedQuote;
+				if ((line.charAt(i) == ';') && (!openedQuote)) {
 					statements.add(statement.replaceAll("\\t", " ").replace("\\s{2,}", " "));
-					statement = "";						
+					statement = "";
+					openedQuote = false;
 				}						
 				else
 					statement+=line.charAt(i);
