@@ -49,6 +49,10 @@ public class KeyTools {
 		if (isQuotValue(cmd))
 			core = getCoreQuot(cmd);
 		
+		if ((core.length() ==1) && ((int)core.charAt(0) == 32)) {
+			return core;
+		}
+		
 		boolean openedQuot = false;
 		String value = "";
 		for (int i = 0; i < core.length(); i++) {
